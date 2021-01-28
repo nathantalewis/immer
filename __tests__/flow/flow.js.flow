@@ -149,6 +149,19 @@ type State = {| user: {| age: number |} |}
     })
 }
 
+{
+    // curried with ReadOnlyArray
+    const readOnlyArray: $ReadOnlyArray<number> = [1]
+    produce((draftState) => {
+        const a = original(draftState)
+        if (a) {
+            const b: number = a[0]
+            // $ExpectError
+            const c: string = a[0]
+        }
+    })(readOnlyArray)
+}
+
 function testMap(state: Map<number, string>) {
     // normal
     state = produce(state, draft => {
